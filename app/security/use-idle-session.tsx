@@ -13,6 +13,7 @@ export function useIdleSession(db:SupabaseClient|null,onExpired:(reason:Reason)=
  const channel=useRef<BroadcastChannel|null>(null);
  const provisional=useRef(false);
  const epoch=useRef(0);
+ const closing=useRef<Promise<unknown>>(Promise.resolve());
  const onExpiredRef=useRef(onExpired);
  const [warning,setWarning]=useState(false);
  useEffect(()=>{onExpiredRef.current=onExpired},[onExpired]);
@@ -24,15 +25,14 @@ export function useIdleSession(db:SupabaseClient|null,onExpired:(reason:Reason)=
    try{channel.current?.postMessage({type,record:current.current})}catch{/* Other tabs also run their own deadline. */}
  },[]);
  const clearCookie=useCallback(()=>{
-   void fetch('/api/admin/session',{method:'DELETE',cache:'no-store',keepalive:true,signal:AbortSignal.timeout(5000)}).catch(()=>{});
+   return fetch('/api/admin/session',{method:'DELETE',cache:'no-store',keepalive:true,signal:AbortSignal.timeout(5000)}).catch(()=>{});
  },[]);
  const expire=useCallback((reason:Reason='inactivity',broadcast=true,revoke=true)=>{
    if(!current.current||current.current.locked)return;
    current.current={...current.current,locked:true};epoch.current++;provisional.current=false;
    persist();setWarning(false);onExpiredRef.current(reason);
    if(broadcast)send('expired');
-   clearCookie();
-   if(revoke&&db)void db.auth.signOut({scope:'local'}).catch(()=>{});
+   closing.current=Promise.allSettled([clearCookie(),...(revoke&&db?[db.auth.signOut({scope:'local'})]:[])]);
  },[clearCookie,db,persist,send]);
  const check=useCallback(()=>{
    if(provisional.current)return false;
@@ -121,7 +121,7 @@ export function useIdleSession(db:SupabaseClient|null,onExpired:(reason:Reason)=
      if(channel.current===connection)channel.current=null;
    };
  },[check,db,expire,extend,persist,send]);
- return {ensureSession,warning,extend,endSession:()=>expire('signed-out')};
+ return {ensureSession,warning,extend,endSession:()=>{expire('signed-out');return closing.current}};
 }
 
 export function IdleWarning({onContinue}:{onContinue:()=>void}){
