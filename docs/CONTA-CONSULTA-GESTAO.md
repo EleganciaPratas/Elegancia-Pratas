@@ -3,7 +3,7 @@ Implementação de 16/11/2026, inteiramente na nuvem.
 
 ## Uso
 Clique no nome no canto superior direito → Trocar conta. As duas opções são Administrador e Somente consulta. A troca desmonta o conteúdo autenticado, aguarda o encerramento local da sessão e a limpeza do cookie, preenche o e-mail escolhido e exige senha e segundo fator da outra conta. Nenhum token master é guardado para voltar silenciosamente.
-O administrador ativo foi preservado. A conta adicional de consulta tem cadastro Auth próprio, sem linha em admin_users; e-mails e IDs pessoais ficam somente no Supabase e nas respostas privadas das contas vinculadas, nunca neste repositório público. A conta aguarda ativação pelo titular. O convite foi autorizado pelo usuário; o aceite do provedor será conferido após a publicação.
+O administrador ativo foi preservado. A conta adicional de consulta tem cadastro Auth próprio, sem linha em admin_users; e-mails e IDs pessoais ficam somente no Supabase e nas respostas privadas das contas vinculadas, nunca neste repositório público. A conta aguarda ativação pelo titular. Após autorização explícita, o Supabase aceitou o envio do convite (HTTP 200) e registrou invited_at. Isso confirma o aceite do provedor, não a entrega na caixa de entrada.
 Não foi criado outro sócio nem preenchido CPF, telefone ou Pix. A participação de Caio no Financeiro não foi modificada.
 
 ## Leitura e permissões
@@ -20,16 +20,18 @@ SQL aditivo em docs/sql/management-readers.review.sql; aplicado primeiro na homo
 Backup privado verificado antes da aplicação oficial: dpl_9yQwkLVq74x8ymN3DPrPCvriVGFc, execução 2026-11-16T17-35-02.024Z-92e1cb3d-ded9-4cd3-955a-c9df2d9f4523, 62 tabelas, 66 imagens, 3.186.054 bytes, SHA256 5bbfeeb654a7414601690f6aa83f1c8e84dae31b12e0282470d272d3b04a1171. Leitura privada conferida e zero gravações pela rotina na origem; arquivo analisado, sem restauração integral real.
 
 ## Testes
-- 54 testes da aplicação passaram; lint sem erros e quatro avisos preexistentes no site público.
+- 55 testes da aplicação passaram; lint sem erros e quatro avisos preexistentes no site público.
 - 65 verificações hospedadas com Auth, MFA e RLS reais: acesso anônimo/AAL1 recusado, leitura, conta vinculada, promoção de papel recusada, INSERT/UPDATE/DELETE recusados, upload privado recusado e 30 funções de alteração recusadas.
 - Quatro verificações adicionais de caixa: saldo inicial R$100, despesa R$10 e transferência R$25 resultam em saldo total R$90, entradas R$0, saídas R$10; lucro do mês sem vendas R$-10, igual ao resumo original. Exclusivamente fixtures da homologação.
 - 40 verificações de navegador passaram: logins com senha e TOTP, troca real de contas, cookie do leitor separado, APIs master recusadas, 11 rotas em 1440/768/390 sem overflow e retorno ao administrador com senha e MFA; zero erros de página.
 - A primeira captura da troca aguardava o e-mail antes de terminar o logout e foi corrigida para aguardar o preenchimento; outra captura aguardava um atalho que o layout esconde em telas pequenas e foi corrigida para usar a largura adequada. A navegação não foi alterada para satisfazer essas capturas.
-- Build otimizado aprovado na homologação. Resultado da implantação oficial será conferido antes de declarar publicado.
+- Build otimizado aprovado na homologação. PR 18 integrado em 8c516ccd3d68db99fd12bffa662b92964306f4c6. Implantação funcional oficial dpl_Gy7txu47G6pGuz8LSuwuLp7BsMiw: READY.
 - Nenhuma dependência adicionada ao produto. Ferramentas de navegador permanecem apenas no sandbox.
 - Advisor confirma que novas funções não são executáveis por anon. Avisos genéricos de SECURITY DEFINER para authenticated e avisos preexistentes da estrutura-base continuam sujeitos à revisão registrada anteriormente; não representam certificação integral de segurança.
 
 ## Validação e encerramento
 Usar a homologação isolada para testes de escrita. O teste hospedado exige explicitamente HOMOLOGATION_REF=cgcaykrtfxlkrbopycyn e credenciais sintéticas guardadas somente no sandbox. Nunca testar cadastro, alteração, exclusão ou fechamento com dados de produção.
 Na conta de consulta, confira filtros e páginas; verifique que gravações são recusadas também na API. Para voltar ao administrador, use Trocar conta e autentique novamente.
-As contas, registros e funções temporárias de provisionamento usados nos testes devem ser removidos ou encerrados com HTTP 410 ao final. O cadastro de leitura solicitado permanece na produção. Nenhum código, banco, imagem ou credencial foi salvo na máquina do usuário.
+As duas contas Auth sintéticas tiveram suas sessões revogadas e foram excluídas; cadastros, movimentações, auditoria e vínculos sintéticos foram removidos da homologação. As funções temporárias de provisionamento, limpeza e convite foram encerradas com HTTP 410. O cadastro de leitura solicitado permanece na produção. Nenhum código, banco, imagem ou credencial foi salvo na máquina do usuário.
+
+Conferência adicional de identidade: uma mudança de usuário pela sessão do navegador limpa imediatamente o conteúdo do usuário anterior; uma resposta atrasada com o token de outra sessão não pode restaurar o checkpoint anterior. Troca explícita continua exigindo as credenciais da outra conta.
