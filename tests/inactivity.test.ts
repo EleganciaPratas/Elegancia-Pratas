@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {IDLE_TIMEOUT_MS,IDLE_WARNING_MS,initialActivity,activityState,recordActivity,readActivity,sessionIdentity} from '../app/security/inactivity.ts';
+import {IDLE_TIMEOUT_MS,IDLE_WARNING_MS,canResumeSession,initialActivity,activityState,recordActivity,readActivity,sessionIdentity} from '../app/security/inactivity.ts';
 const start=1800000000000;
 const sessionId='10000000-0000-4000-8000-000000000001';
 const record={sessionId,lastActive:start,locked:false};
@@ -39,4 +39,11 @@ test('a reopened browser without a checkpoint cannot grant a new idle period to 
  const old=initialActivity(sessionId,new Date(start).toISOString());
  assert.equal(activityState(old,start+IDLE_TIMEOUT_MS),'expired');
  assert.equal(activityState(initialActivity(sessionId,undefined),start),'expired');
+});
+
+test('only explicit authentication may change the session identity; a late old token cannot resume',()=>{
+ assert.equal(canResumeSession(undefined,'new',false),true);
+ assert.equal(canResumeSession('same','same',false),true);
+ assert.equal(canResumeSession('current','previous',false),false);
+ assert.equal(canResumeSession('current','new',true),true);
 });

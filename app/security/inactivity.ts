@@ -37,3 +37,8 @@ export function initialActivity(sessionId:string,signedInAt:string|undefined):Ac
   const parsed=signedInAt?Date.parse(signedInAt):NaN;
   return {sessionId,lastActive:Number.isFinite(parsed)?parsed:0,locked:false};
 }
+
+// A late request from a previous account must not restore that account's checkpoint.
+export function canResumeSession(currentSessionId:string|undefined,nextSessionId:string,fresh:boolean){
+ return fresh||!currentSessionId||currentSessionId===nextSessionId;
+}

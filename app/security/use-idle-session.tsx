@@ -2,7 +2,7 @@
 
 import {useCallback,useEffect,useRef,useState} from 'react';
 import type {Session,SupabaseClient} from '@supabase/supabase-js';
-import {activityState,initialActivity,readActivity,recordActivity,sessionIdentity,type ActivityRecord} from './inactivity';
+import {activityState,canResumeSession,initialActivity,readActivity,recordActivity,sessionIdentity,type ActivityRecord} from './inactivity';
 
 type Reason='inactivity'|'signed-out';
 export const IDLE_MESSAGE='Sua sessão foi encerrada após 15 minutos de inatividade. Entre novamente.';
@@ -49,7 +49,7 @@ export function useIdleSession(db:SupabaseClient|null,onExpired:(reason:Reason)=
  const ensureSession=useCallback(async(session:Session|null,fresh=false)=>{
    if(!session)return false;
    const sessionId=sessionIdentity(session.access_token);
-   if(!sessionId)return false;
+   if(!sessionId||!canResumeSession(current.current?.sessionId,sessionId,fresh))return false;
    if(fresh||current.current?.sessionId!==sessionId){
      epoch.current++;const generation=epoch.current;
      let stored:ActivityRecord|null=null,storageAvailable=true;

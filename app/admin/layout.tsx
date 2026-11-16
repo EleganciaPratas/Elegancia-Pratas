@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { createContext, useCallback, useContext, useEffect, useState, type FormEvent, type ReactNode } from 'react';
+import { createContext, useCallback, useContext, useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import './management.css';
 import './queue.css';
@@ -72,8 +72,11 @@ export default function ManagementLayout({ children }: { children: ReactNode }) 
   const [accountName, setAccountName] = useState('');
   const [readOnly,setReadOnly]=useState(false);
   const [switching,setSwitching]=useState(false);
+  const authenticatedOwner=useRef('');
+  const identityCleanup=useRef<Promise<unknown>>(Promise.resolve());
 
   const handleExpired = useCallback((reason:'inactivity'|'signed-out') => {
+    authenticatedOwner.current='';
     setState('login'); setPassword(''); setCode(''); setFactorId(''); setQrCode('');
     setAccountName(''); setReadOnly(false); setMenuOpen(false);
     setMessage(reason==='inactivity'?IDLE_MESSAGE:'Sessão encerrada. Entre novamente.');
@@ -111,10 +114,22 @@ export default function ManagementLayout({ children }: { children: ReactNode }) 
       viewerName=String(context.data.name||'Consulta');
     }
     if(!await ensureSession(session)){handleExpired('inactivity');return}
+    authenticatedOwner.current=user.id;
     setReadOnly(viewerName!==null);
     setAccountName(viewerName||role?.display_name?.trim()||user.user_metadata?.full_name||user.email?.split('@')[0]||'Minha conta');
     setMessage('');setState('ready');
   }, [ensureSession,handleExpired]);
+
+  useEffect(()=>{
+    if(!db)return;
+    const{data:{subscription}}=db.auth.onAuthStateChange((_event,session)=>{
+      if(authenticatedOwner.current&&session?.user.id!==authenticatedOwner.current){
+        handleExpired('signed-out');
+        if(session)identityCleanup.current=fetch('/api/admin/session',{method:'DELETE',cache:'no-store',keepalive:true}).catch(()=>{});
+      }
+    });
+    return()=>subscription.unsubscribe();
+  },[handleExpired]);
 
   useEffect(() => {
     let active = true;
@@ -153,6 +168,7 @@ export default function ManagementLayout({ children }: { children: ReactNode }) 
   async function signIn(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!db || switching) return;
+    await identityCleanup.current;
     const { data, error } = await db.auth.signInWithPassword({ email, password });
     if (error) { setMessage('Não foi possível entrar. Confira suas credenciais.'); return; }
     if(!await ensureSession(data.session,true)){handleExpired('inactivity');return}
