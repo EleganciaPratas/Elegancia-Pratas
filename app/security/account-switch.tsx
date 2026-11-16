@@ -1,6 +1,7 @@
 'use client';
 import {useEffect,useState} from 'react';
 import type {SupabaseClient} from '@supabase/supabase-js';
+import AccountMenuIcon from './account-menu-icon';
 import {Modal} from '../admin/ui/components';
 type Account={email:string;name:string;role:'administrador'|'consulta';current:boolean};
 export default function AccountSwitch({db,onSwitch}:{db:SupabaseClient;onSwitch:(email:string)=>Promise<void>}){
@@ -12,7 +13,7 @@ export default function AccountSwitch({db,onSwitch}:{db:SupabaseClient;onSwitch:
  });return()=>{active=false};
  },[db,open,revision]);
  async function choose(email:string){setBusy(true);try{await onSwitch(email);setOpen(false)}catch{setError(true)}finally{setBusy(false)}}
- return <><button type="button" onClick={()=>setOpen(true)}>Trocar conta</button>
+ return <><button className="account-menu-item" type="button" onClick={()=>setOpen(true)}><span className="account-menu-item-icon"><AccountMenuIcon name="switch"/></span><span className="account-menu-item-copy"><strong>Trocar conta</strong><small>Usar outro perfil de acesso</small></span><AccountMenuIcon name="arrow"/></button>
  <Modal open={open} onClose={()=>{if(!busy)setOpen(false)}} title="Trocar conta">
  <p>Salve o que estiver preenchendo. A sessão atual será encerrada; a outra conta exige senha e verificação em duas etapas.</p>
  {busy?<p role="status">Preparando a troca de conta…</p>:error?<><p role="alert">Não foi possível carregar as contas vinculadas.</p><button type="button" onClick={()=>setRevision(n=>n+1)}>Tentar novamente</button></>:accounts.length?
