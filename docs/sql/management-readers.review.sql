@@ -127,4 +127,20 @@ declare m date:=date_trunc('month',p_month)::date;v_sales bigint;v_cost bigint;v
 end $f$;
 revoke all on function public.management_sales_dashboard(),public.management_finance_summary(date) from public,anon;
 grant execute on function public.management_sales_dashboard(),public.management_finance_summary(date) to authenticated;
+create view public.management_account_balances with(security_invoker=true) as
+select a.id,a.name,a.opening_cents,a.opening_cents+coalesce(sum(case when e.direction='entrada'then e.amount_cents else -e.amount_cents end),0)::bigint as balance_cents
+from public.finance_accounts a left join public.finance_entries e on e.account_id=a.id group by a.id,a.name,a.opening_cents;
+revoke all on public.management_account_balances from public,anon;
+grant select on public.management_account_balances to authenticated;
+create function public.management_finance_cash(p_month date) returns jsonb language plpgsql stable security invoker set search_path='' as $f$
+declare m date:=date_trunc('month',p_month)::date;begin
+ if not(public.has_staff_role(array['administrador'])or public.management_is_reader())then raise exception 'Acesso negado';end if;
+ return jsonb_build_object(
+ 'balance_cents',(select coalesce(sum(balance_cents),0)from public.management_account_balances),
+ 'incoming_cents',(select coalesce(sum(amount_cents),0)from public.finance_entries where occurred_on>=m and occurred_on<m+interval '1 month'and direction='entrada'and category<>'transferencia'),
+ 'outgoing_cents',(select coalesce(sum(amount_cents),0)from public.finance_entries where occurred_on>=m and occurred_on<m+interval '1 month'and direction='saida'and category<>'transferencia'));
+end $f$;
+revoke all on function public.management_finance_cash(date)from public,anon;
+grant execute on function public.management_finance_cash(date)to authenticated;
+
 commit;
