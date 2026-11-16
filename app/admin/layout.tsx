@@ -73,6 +73,7 @@ export default function ManagementLayout({ children }: { children: ReactNode }) 
   const [readOnly,setReadOnly]=useState(false);
   const [switching,setSwitching]=useState(false);
   const authenticatedOwner=useRef('');
+  const identityCleanup=useRef<Promise<unknown>>(Promise.resolve());
 
   const handleExpired = useCallback((reason:'inactivity'|'signed-out') => {
     authenticatedOwner.current='';
@@ -124,7 +125,7 @@ export default function ManagementLayout({ children }: { children: ReactNode }) 
     const{data:{subscription}}=db.auth.onAuthStateChange((_event,session)=>{
       if(authenticatedOwner.current&&session?.user.id!==authenticatedOwner.current){
         handleExpired('signed-out');
-        void fetch('/api/admin/session',{method:'DELETE',cache:'no-store',keepalive:true}).catch(()=>{});
+        if(session)identityCleanup.current=fetch('/api/admin/session',{method:'DELETE',cache:'no-store',keepalive:true}).catch(()=>{});
       }
     });
     return()=>subscription.unsubscribe();
@@ -167,6 +168,7 @@ export default function ManagementLayout({ children }: { children: ReactNode }) 
   async function signIn(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!db || switching) return;
+    await identityCleanup.current;
     const { data, error } = await db.auth.signInWithPassword({ email, password });
     if (error) { setMessage('Não foi possível entrar. Confira suas credenciais.'); return; }
     if(!await ensureSession(data.session,true)){handleExpired('inactivity');return}
