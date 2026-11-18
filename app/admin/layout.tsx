@@ -65,6 +65,9 @@ export default function ManagementLayout({ children }: { children: ReactNode }) 
   const [menuOpen, setMenuOpen] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [recovering, setRecovering] = useState(false);
+  const [recoveryBusy, setRecoveryBusy] = useState(false);
   const [factorId, setFactorId] = useState('');
   const [qrCode, setQrCode] = useState('');
   const [code, setCode] = useState('');
@@ -165,6 +168,18 @@ export default function ManagementLayout({ children }: { children: ReactNode }) 
     return () => { cancelled = true; window.clearInterval(refresh); };
   }, [state, pathname, ensureSession, readOnly]);
 
+  async function recoverPassword(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!db || recoveryBusy) return;
+    setRecoveryBusy(true); setMessage('');
+    try {
+      const { error } = await db.auth.resetPasswordForEmail(email.trim(), { redirectTo: `${window.location.origin}/ativar-acesso` });
+      if (error) throw error;
+      setMessage('Se houver uma conta com esse e-mail, enviaremos um link para redefinir a senha. Confira também o lixo eletrônico.');
+    } catch { setMessage('Não foi possível solicitar a recuperação agora. Tente novamente em alguns minutos.'); }
+    finally { setRecoveryBusy(false); }
+  }
+
   async function signIn(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!db || switching) return;
@@ -199,7 +214,7 @@ export default function ManagementLayout({ children }: { children: ReactNode }) 
 
   return <div className="management-shell">
     {state === 'loading' && <main className="management-auth"><p>Verificando acesso...</p></main>}
-    {state === 'login' && <main className="management-auth"><p className="eyebrow">ÁREA RESTRITA</p><h1>Gestão Elegância</h1><p>Somente contas autorizadas podem acessar os dados da loja.</p>{db ? <form onSubmit={signIn}><label>E-mail<input type="email" autoComplete="username" required value={email} onChange={event => setEmail(event.target.value)}/></label><label>Senha<input type="password" autoComplete="current-password" required value={password} onChange={event => setPassword(event.target.value)}/></label><button className="botao" type="submit" disabled={switching}>{switching?'Encerrando sessão…':'Entrar'}</button></form> : <p>Configuração do Supabase indisponível.</p>}<p role="status">{message}</p></main>}
+    {state === 'login' && <main className="management-auth"><p className="eyebrow">ÁREA RESTRITA</p><h1>{recovering ? 'Recuperar senha' : 'Gestão Elegância'}</h1><p>{recovering ? 'Informe o e-mail da sua conta para receber um link de redefinição.' : 'Somente contas autorizadas podem acessar os dados da loja.'}</p>{db ? <><form onSubmit={recovering ? recoverPassword : signIn}><label>E-mail<input type="email" autoComplete="username" required value={email} onChange={event => setEmail(event.target.value)}/></label>{!recovering && <label>Senha<input type={showPassword ? 'text' : 'password'} autoComplete="current-password" required value={password} onChange={event => setPassword(event.target.value)}/><button type="button" className="auth-text-button" aria-pressed={showPassword} onClick={() => setShowPassword(!showPassword)}>{showPassword ? 'Ocultar senha' : 'Mostrar senha'}</button></label>}<button className="botao" type="submit" disabled={switching || recoveryBusy}>{recovering ? (recoveryBusy ? 'Enviando…' : 'Enviar link de recuperação') : (switching ? 'Encerrando sessão…' : 'Entrar')}</button></form><button type="button" className="auth-text-button auth-recovery-link" onClick={() => { setRecovering(!recovering); setMessage(''); setPassword(''); }}>{recovering ? 'Voltar para o login' : 'Esqueci minha senha'}</button></> : <p>Configuração do Supabase indisponível.</p>}<p role="status">{message}</p></main>}
     {state === 'mfa' && <main className="management-auth"><p className="eyebrow">ÁREA RESTRITA</p><h1>Verificação em duas etapas</h1>{qrCode && <><p>Escaneie o código no aplicativo autenticador.</p><Image unoptimized src={qrCode} alt="Código de configuração do autenticador" width={180} height={180}/></>}<form onSubmit={verifyMfa}><label>Código de seis dígitos<input inputMode="numeric" autoComplete="one-time-code" pattern="[0-9]{6}" required value={code} onChange={event => setCode(event.target.value)}/></label><button className="botao" type="submit">Verificar</button></form><p role="status">{message}</p></main>}
     {state === 'ready' && db && <ManagementContext.Provider value={{ db }}><div className="management-layout erp-collapsed"><aside className={`management-sidebar ${menuOpen ? 'is-open' : ''}`}><Link className="management-brand" href="/admin" aria-label="E✦ Elegância PAINEL DE GESTÃO · visão geral" title="Visão geral"><span className="management-brand-symbol">E✦</span></Link><button className="management-menu-toggle" type="button" aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'} title={menuOpen ? 'Fechar menu' : 'Abrir menu'} aria-expanded={menuOpen} aria-controls="management-navigation" onClick={() => setMenuOpen(!menuOpen)}><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><nav id="management-navigation" aria-label="Seções da gestão">{sections.map(section => <div key={section.href}><Link href={section.href} aria-label={section.label} title={section.label} aria-current={(pathname === section.href || (section.href !== '/admin' && pathname.startsWith(`${section.href}/`))) ? 'page' : undefined} onClick={() => setMenuOpen(false)}><NavIcon name={section.icon}/></Link></div>)}</nav><div className="management-sidebar-bottom"><Link className="management-store-link" href="/" aria-label="Ver loja" title="Ver loja"><NavIcon name="store"/></Link><button type="button" aria-label="Sair" title="Sair" onClick={() => endSession()}><NavIcon name="logout"/></button></div></aside><div className="management-main"><header className="management-topbar"><div><span className="management-topbar-kicker">ELEGÂNCIA PRATAS</span><strong>{sections.find(section => pathname === section.href || (section.href !== '/admin' && pathname.startsWith(`${section.href}/`)))?.label ?? 'Gestão da loja'}</strong></div><WorkspaceTools db={db} readOnly={readOnly}/><Link className="erp-alert-link" href="/admin#operation-title">Pendências</Link><AccountMenu db={db} name={accountName} readOnly={readOnly} onSwitch={switchAccount}/></header><nav className="erp-breadcrumbs" aria-label="Localização"><Link href="/admin">Gestão</Link><span aria-hidden="true">/</span><span>{sections.find(s => s.href !== '/admin' && pathname.startsWith(s.href))?.label ?? 'Visão geral'}</span></nav>{warning&&<IdleWarning onContinue={extend}/>} {readOnly?<ManagementReadOnly db={db} pathname={pathname}/>:children}</div></div></ManagementContext.Provider>}
   </div>;

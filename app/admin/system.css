@@ -33,6 +33,7 @@
 .management-shell :is(th,td) { font-variant-numeric:tabular-nums; }
 .management-shell .management-status:not(:empty) { border-left:3px solid #8b3850; border-radius:5px; padding:12px 15px; }
 .management-auth { border-radius:12px; box-shadow:0 12px 40px #3a172210; }
+.management-auth .auth-text-button{justify-self:start;width:auto;min-height:44px;padding:6px 0;border:0;background:transparent;color:#68152d;text-decoration:underline;cursor:pointer;font:inherit}.management-auth .auth-recovery-link{margin-top:14px}
 @media(max-width:900px) {
   .management-layout { grid-template-columns:1fr; }
   .management-sidebar { position:sticky; width:100%; height:auto; min-height:68px; padding:10px 16px; display:flex; flex-direction:row; flex-wrap:wrap; align-items:center; gap:0; overflow:visible; }

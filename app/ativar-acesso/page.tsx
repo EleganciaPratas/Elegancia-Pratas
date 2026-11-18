@@ -14,6 +14,7 @@ export default function ActivateAccessPage() {
   const [access, setAccess] = useState<'loading' | 'valid' | 'invalid'>('loading');
   const [password, setPassword] = useState('');
   const [confirmation, setConfirmation] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
   const [message, setMessage] = useState('');
@@ -79,16 +80,17 @@ export default function ActivateAccessPage() {
           <p>Escolha uma senha pessoal com pelo menos 12 caracteres.</p>
           <form onSubmit={submit}>
             <label>Nova senha
-              <input type="password" autoComplete="new-password" required minLength={12} value={password}
+              <input type={showPassword ? 'text' : 'password'} autoComplete="new-password" required minLength={12} value={password}
                 onChange={event => { setPassword(event.target.value); setMessage(''); }}
                 aria-describedby="password-help" />
             </label>
             <label>Repita a senha
-              <input type="password" autoComplete="new-password" required minLength={12} value={confirmation}
+              <input type={showPassword ? 'text' : 'password'} autoComplete="new-password" required minLength={12} value={confirmation}
                 onChange={event => { setConfirmation(event.target.value); setMessage(''); }}
                 aria-invalid={confirmation.length > 0 && password !== confirmation}
                 aria-describedby="password-help" />
             </label>
+            <label><span><input type="checkbox" checked={showPassword} onChange={event => setShowPassword(event.target.checked)} style={{ width: 'auto', marginRight: 8 }}/>{showPassword ? 'Ocultar senhas' : 'Mostrar senhas'}</span></label>
             <p id="password-help">Os dois campos devem conter a mesma senha.</p>
             <button className="botao" type="submit" disabled={busy}>{busy ? 'Salvando...' : 'Definir senha'}</button>
           </form>
