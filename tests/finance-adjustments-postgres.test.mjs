@@ -145,3 +145,10 @@ test('estornar duas pernas de uma transferência simultaneamente cria somente um
  const r=await Promise.all(ids.map(id=>asyncRaw(role(master,reverse(randomUUID(),id,'2027-02-02',1234,null)))));
  assert.equal(r.filter(x=>x.ok).length,1,JSON.stringify(r));assert.equal(q("select count(*)from public.finance_adjustments where transfer_id='"+original+"'"),'1');
 });
+
+test('recuperar despesa de mês fechado aumenta somente o resultado da competência do estorno',()=>{
+ const target=q("select id from public.finance_entries where description='Fixture aluguel'");const historical=q("select profit_cents from public.finance_months where month='2026-10-01'");
+ q("begin;"+role(master,reverse(randomUUID(),target,'2027-02-03',1000)+";do $$declare s jsonb;begin s:=public.finance_adjusted_summary('2027-02-01');if (s->>'expenses_cents')::bigint<>-1000 or (s->>'profit_cents')::bigint<>1000 then raise exception 'Recuperação incorreta';end if;end$$;")+"rollback;");
+ assert.equal(q("select profit_cents from public.finance_months where month='2026-10-01'"),historical);
+ assert.equal(report('2027-02').profit_cents,0);
+});

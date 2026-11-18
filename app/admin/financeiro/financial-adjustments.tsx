@@ -40,7 +40,7 @@ export default function FinancialAdjustments({db,month,accounts,sales,entries,on
    }
    pending.current=null;setUncertain(false);onNotice('Ajuste registrado na competência '+request.day.slice(0,7)+'. O histórico original foi preservado.');onBusyChange(false);setBusy(false);onSaved(request.day);
   }catch{setUncertain(true);onNotice('A resposta não foi confirmada. Use “Conferir operação” para repetir a mesma solicitação com segurança, sem duplicar o ajuste.')}
-  finally{setBusy(false);onBusyChange(false)}
+  finally{setBusy(false);onBusyChange(Boolean(pending.current))}
  }
  async function submit(event:FormEvent<HTMLFormElement>){event.preventDefault();if(busy||uncertain||!source)return;const f=new FormData(event.currentTarget);const day=String(f.get('day'));
   try{
