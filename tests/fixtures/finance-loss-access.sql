@@ -1,4 +1,5 @@
 -- SOMENTE PostgreSQL descartável em nuvem. Relógio sintético não é implantado.
+do $$begin if current_database()<>'finance_fixture' or (inet_server_addr()<>'127.0.0.1'::inet and coalesce(current_setting('finance.fixture',true),'')<>'cloud-disposable') then raise exception 'Banco de teste local obrigatório';end if;end$$;
 create table public.management_readers(user_id uuid primary key);
 insert into public.management_readers values('00000000-0000-0000-0000-000000000003');
 CREATE OR REPLACE FUNCTION public.management_finance_summary(p_month date)
