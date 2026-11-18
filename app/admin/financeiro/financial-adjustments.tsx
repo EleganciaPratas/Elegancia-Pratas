@@ -42,7 +42,7 @@ export default function FinancialAdjustments({db,month,accounts,sales,entries,on
   }catch{setUncertain(true);onNotice('A resposta não foi confirmada. Use “Conferir operação” para repetir a mesma solicitação com segurança, sem duplicar o ajuste.')}
   finally{setBusy(false);onBusyChange(Boolean(pending.current))}
  }
- async function submit(event:FormEvent<HTMLFormElement>){event.preventDefault();if(busy||uncertain||!source)return;const f=new FormData(event.currentTarget);const day=String(f.get('day'));
+ async function submit(event:FormEvent<HTMLFormElement>){event.preventDefault();if(busy||uncertain||pending.current||!source)return;const f=new FormData(event.currentTarget);const day=String(f.get('day'));
   try{
    let rpc:string,args:Record<string,unknown>;const requestId=crypto.randomUUID();
    if(kind==='sale'){
