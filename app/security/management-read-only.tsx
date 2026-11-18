@@ -46,7 +46,7 @@ export default function ManagementReadOnly({db,pathname}:{db:SupabaseClient;path
    if(dataset.table.startsWith('campaign_'))query=query.eq('archived',false);
    const[data,result,cashResult]=await Promise.all([
     query.range(page*pageSize,(page+1)*pageSize-1),
-    isFinance?db.rpc('finance_closing_summary',{p_month:month+'-01'}):isOverview?db.rpc('management_sales_dashboard'):Promise.resolve({data:null,error:null}),
+    isFinance?db.rpc('finance_adjusted_summary',{p_month:month+'-01'}):isOverview?db.rpc('management_sales_dashboard'):Promise.resolve({data:null,error:null}),
     isFinance?db.rpc('management_finance_cash',{p_month:month+'-01'}):Promise.resolve({data:null,error:null})
    ]);
    if(data.error||result.error||cashResult.error)throw Error('READ');
