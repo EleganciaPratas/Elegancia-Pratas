@@ -113,3 +113,9 @@ test('lançamento concorrente ao fechamento entra na apuração ou é bloqueado 
  assert.equal(s.closing_loss_cents,results[1].ok?100:0);
  assert.equal(query("select profit_cents from public.finance_months where month='2027-08-01'"),String(s.profit_cents));
 });
+
+test('predicado de autorização nulo não libera as novas consultas e mutações',()=>{
+ for(const call of ["select public.finance_closing_summary('2027-09-01')","select public.finance_close_period('2027-09-01',true)","select public.finance_configure_closing('2026-10-01',0,'Fixture conferida')"]){
+  assert.equal(raw("begin;create or replace function public.has_staff_role(required_roles text[]) returns boolean language sql stable security definer set search_path='' as $$select null::boolean$$;"+role(master,call)+";rollback;").ok,false);
+ }
+});

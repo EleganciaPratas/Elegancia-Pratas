@@ -42,6 +42,7 @@ returns void language plpgsql security definer set search_path='' as $f$
 declare earliest date;
 begin
  perform public.finance_require_admin();
+ if not coalesce(public.has_staff_role(array['administrador']),false) then raise exception 'Acesso financeiro negado';end if;
  perform pg_advisory_xact_lock(83022,1);
  lock table public.finance_sales,public.finance_entries in share row exclusive mode;
  if p_first_month is null or extract(day from p_first_month)<>1 or p_first_month>public.finance_today() then raise exception 'Informe o primeiro mês já iniciado';end if;
@@ -58,7 +59,7 @@ create function public.finance_closing_summary(p_month date)
 returns jsonb language plpgsql stable security definer set search_path='' as $f$
 declare m date:=date_trunc('month',p_month)::date;s jsonb;setup public.finance_closing_setup;prev public.finance_loss_closures;saved public.finance_loss_closures;closed public.finance_months;expected date;loss bigint;calc jsonb;
 begin
- if not(public.has_staff_role(array['administrador'])or public.management_is_reader())then raise exception 'Acesso negado';end if;
+ if not coalesce(public.has_staff_role(array['administrador'])or public.management_is_reader(),false)then raise exception 'Acesso negado';end if;
  if p_month is null then raise exception 'Competência obrigatória';end if;
  s:=public.management_finance_summary(m);
  select * into setup from public.finance_closing_setup where singleton;
@@ -80,6 +81,7 @@ returns trigger language plpgsql security definer set search_path='' as $f$
 declare s jsonb;expected_pool bigint;
 begin
  perform public.finance_require_admin();
+ if not coalesce(public.has_staff_role(array['administrador']),false) then raise exception 'Acesso financeiro negado';end if;
  perform pg_advisory_xact_lock(83022,1);
  -- AFTER INSERT já vê finance_months; o saldo anterior vem apenas do histórico de perdas.
  s:=public.finance_closing_summary(new.month);
