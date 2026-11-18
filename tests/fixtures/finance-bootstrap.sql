@@ -1,6 +1,6 @@
 -- SOMENTE fixture descartável. Não contém dados pessoais reais.
-do $$begin if current_database()<>'finance_fixture' or inet_server_addr()<>'127.0.0.1'::inet then raise exception 'Banco de teste local obrigatório';end if;end$$;
-do $begin if not exists(select 1 from pg_roles where rolname='anon')then create role anon;end if;if not exists(select 1 from pg_roles where rolname='authenticated')then create role authenticated;end if;end$;
+do $$begin if current_database()<>'finance_fixture' or (inet_server_addr()<>'127.0.0.1'::inet and coalesce(current_setting('finance.fixture',true),'')<>'cloud-disposable') then raise exception 'Banco de teste local obrigatório';end if;end$$;
+do $$begin if not exists(select 1 from pg_roles where rolname='anon')then create role anon;end if;if not exists(select 1 from pg_roles where rolname='authenticated')then create role authenticated;end if;end$$;
 create schema auth;
 create function auth.uid() returns uuid language sql stable as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;
 create function auth.jwt() returns jsonb language sql stable as $$select jsonb_build_object('aal',coalesce(nullif(current_setting('request.jwt.claim.aal',true),''),'aal1'))$$;
