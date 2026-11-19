@@ -1,0 +1,61 @@
+/* Editorial entrance to the existing management authentication flow. */
+.management-shell .management-access{min-height:100svh;display:grid;place-items:center;padding:24px;background:var(--erp-canvas)}
+.management-shell .management-access-frame{width:100%;max-width:1600px;min-height:calc(100svh - 48px);display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);border:1px solid var(--erp-border);border-radius:24px;overflow:hidden;background:var(--erp-surface);box-shadow:0 16px 60px #28151b0d}
+.management-shell .management-access-hero{position:relative;isolation:isolate;display:flex;flex-direction:column;min-width:0;min-height:700px;padding:48px;color:#fff;background:#431020}
+.management-shell .management-access-photo{object-fit:cover;object-position:50% 40%;z-index:-2}
+.management-shell .management-access-shade{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,#21081099 0%,#2108100a 33%,#21081075 55%,#210810f5 100%)}
+.management-shell .management-access-brand{display:inline-flex;align-items:center;align-self:flex-start;gap:15px;color:#fff;text-decoration:none}
+.management-shell .management-access-monogram{display:flex;align-items:baseline;font:normal 2.6rem/1 Georgia,serif;letter-spacing:-.08em}
+.management-shell .management-access-monogram>span{font-size:1.35rem;align-self:center;transform:translate(2px,-5px)}
+.management-shell .management-access-wordmark{display:grid;gap:7px;font:normal 1.4rem/1 Georgia,serif;letter-spacing:.02em}
+.management-shell .management-access-wordmark>span{font:500 .55rem/1.4 var(--erp-font);letter-spacing:.42em;padding-left:2px}
+.management-shell .management-access-editorial{margin-top:auto;padding:160px 0 52px;max-width:500px}
+.management-shell .management-access-kicker{font-size:.62rem;line-height:1.6;letter-spacing:.22em;color:#ead3db;font-weight:600}
+.management-shell .management-access-editorial h2{font:normal clamp(2.6rem,4.3vw,4.6rem)/1.05 Georgia,serif;letter-spacing:-.04em;color:#fff;margin:20px 0 24px;text-wrap:balance}
+.management-shell .management-access-editorial h2>span{color:#e8cdd4}
+.management-shell .management-access-editorial>p{max-width:31ch;color:#ead3db;font-size:.87rem;line-height:1.7;margin:22px 0 0}
+.management-shell .management-access-signature{display:flex;align-items:center;gap:12px;max-width:112px;color:#e8cdd4;font-size:.75rem}
+.management-shell .management-access-signature>span{height:1px;flex:1;background:#e8cdd477}
+.management-shell .management-access-hero-footer{font-size:.56rem;letter-spacing:.17em;color:#ead3db;line-height:1.6}
+.management-shell .management-auth.management-access-form{display:flex;flex-direction:column;width:100%;max-width:none;min-width:0;padding:44px clamp(28px,4.3vw,76px) 30px;margin:0;border:0;border-radius:0;background:var(--erp-surface)}
+.management-shell .management-access-form-top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--erp-muted);font-size:.57rem;line-height:1.5;letter-spacing:.13em}
+.management-shell .management-access-private{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border:1px solid var(--erp-border);border-radius:999px;letter-spacing:0;font-size:.65rem;white-space:nowrap;color:var(--erp-brand)}
+.management-shell .management-access-private svg{width:13px;height:13px}
+.management-shell .management-access-content{width:100%;max-width:400px;margin:auto;min-width:0;padding:56px 0}
+.management-shell .management-access-heading{margin-bottom:32px}
+.management-shell .management-access-form .management-access-heading h1{font:normal clamp(2rem,3vw,2.9rem)/1.12 Georgia,serif;letter-spacing:-.04em;color:var(--erp-ink);margin:0 0 14px;overflow-wrap:break-word}
+.management-shell .management-access-heading>p{font-size:.86rem;line-height:1.7;color:var(--erp-muted);margin:0;max-width:39ch}
+.management-shell .management-access-form form{display:grid;gap:22px;max-width:none;margin:0}
+.management-shell .management-access-form label{font-size:.79rem;font-weight:600;line-height:1.5;color:var(--erp-ink);gap:9px;display:grid}
+.management-shell .management-access-field{position:relative;display:block;min-width:0}
+.management-shell .management-access-field>.management-access-input-icon{position:absolute;left:15px;top:50%;transform:translateY(-50%);display:flex;color:var(--erp-muted);pointer-events:none}
+.management-shell .management-access-form .management-access-field input{min-height:52px;border-radius:10px;padding:13px 16px 13px 46px;background:var(--erp-canvas);border:1px solid var(--erp-control-border);color:var(--erp-ink);font-size:.9rem;line-height:1.5;transition:border-color 160ms,box-shadow 160ms}
+.management-shell .management-access-form .management-access-field input::placeholder{color:var(--erp-muted);opacity:1;font-weight:400}
+.management-shell .management-access-form .management-access-password input{padding-right:56px}
+.management-shell .management-access-field .management-access-reveal{position:absolute;right:5px;top:50%;transform:translateY(-50%);display:grid;place-items:center;width:44px;height:44px;padding:0;margin:0;border:0;border-radius:7px;background:transparent;color:var(--erp-muted);cursor:pointer}
+.management-shell .management-access-reveal:hover{background:var(--erp-tint);color:var(--erp-brand)}
+.management-shell .management-access-form .management-access-submit{display:flex;justify-content:space-between;align-items:center;gap:16px;width:100%;min-height:52px;margin:5px 0 0;padding:14px 20px;border:1px solid transparent;border-radius:10px;font:600 .85rem/1.4 var(--erp-font);letter-spacing:0;text-transform:none;background:var(--erp-brand);color:var(--erp-on-brand);cursor:pointer}
+.management-shell .management-access-submit:hover:not(:disabled){box-shadow:0 5px 18px #68152d26}
+.management-shell .management-access-submit>svg{width:19px;height:19px;flex:none}
+.management-shell .management-access-form .management-access-recovery{display:block;min-height:44px;margin:12px 0 0;padding:10px 0;border:0;background:transparent;color:var(--erp-brand);font-size:.78rem;font-weight:600;text-align:left;cursor:pointer;text-decoration:none}
+.management-shell .management-access-recovery:hover{text-decoration:underline;text-underline-offset:4px}
+.management-shell .management-access-status{margin:0;overflow-wrap:anywhere;font-size:.82rem;color:var(--erp-ink)}
+.management-shell .management-access-status:not(:empty){padding:14px 16px;margin-top:18px;border:1px solid var(--erp-border);border-radius:10px;background:var(--erp-canvas)}
+.management-shell .management-access-assurance{display:flex;align-items:start;gap:11px;margin-top:30px;padding-top:22px;border-top:1px solid var(--erp-border);color:var(--erp-muted)}
+.management-shell .management-access-assurance>svg{flex:none;width:18px;height:18px;margin-top:2px;color:var(--erp-brand)}
+.management-shell .management-access-assurance>p{display:grid;gap:3px;margin:0;font-size:.73rem;font-weight:600;color:var(--erp-ink);line-height:1.6}
+.management-shell .management-access-assurance>p>span{font-size:.7rem;font-weight:400;color:var(--erp-muted)}
+.management-shell .management-access-form .management-access-footer{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:0;background:transparent;color:var(--erp-muted);font-size:.68rem}
+.management-shell .management-access-footer a{display:inline-flex;align-items:center;gap:9px;min-height:44px;color:var(--erp-brand)}
+.management-shell .management-access-footer a:hover{text-decoration:underline;text-underline-offset:4px}
+.management-shell .management-access-qr{display:grid;justify-items:center;gap:12px;padding:20px;margin:0 0 24px;border:1px solid var(--erp-border);border-radius:12px;background:var(--erp-canvas)}
+.management-shell .management-access-qr>p{margin:0;font-size:.8rem;color:var(--erp-muted);line-height:1.6;text-align:center}
+.management-shell .management-access-qr img{width:180px;height:180px;max-width:100%;object-fit:contain;background:#fff;padding:8px;border-radius:8px}
+.management-shell .management-access-form .management-access-code{min-height:58px;text-align:center;font-size:1.35rem;letter-spacing:.3em;font-variant-numeric:tabular-nums}
+.management-shell .management-access-loading{display:grid;gap:14px}
+.management-shell .management-access-loading>span{height:48px;border-radius:10px;background:var(--erp-canvas);border:1px solid var(--erp-border);animation:erp-pulse 1.4s ease-in-out infinite}
+.management-shell .management-access-loading>span:nth-child(2){width:70%}
+@media(min-width:1600px){.management-shell .management-access{padding:40px}.management-shell .management-access-frame{min-height:calc(100svh - 80px)}.management-shell .management-access-hero{padding:56px}}
+@media(max-width:1050px){.management-shell .management-access-hero{padding:32px}.management-shell .management-auth.management-access-form{padding:32px}.management-shell .management-access-editorial h2{font-size:3.2rem}.management-shell .management-access-private{font-size:.6rem}}
+@media(max-width:760px){.management-shell .management-access{display:block;padding:16px}.management-shell .management-access-frame{min-height:calc(100svh - 32px);grid-template-columns:minmax(0,1fr);border-radius:18px}.management-shell .management-access-hero{min-height:240px;padding:24px}.management-shell .management-access-photo{object-position:50% 42%}.management-shell .management-access-shade{background:linear-gradient(90deg,#210810b8,#21081022),linear-gradient(0deg,#210810d9,transparent 85%)}.management-shell .management-access-brand{gap:10px}.management-shell .management-access-monogram{font-size:2rem}.management-shell .management-access-monogram>span{font-size:1rem}.management-shell .management-access-wordmark{font-size:1.15rem;gap:5px}.management-shell .management-access-wordmark>span{font-size:.45rem}.management-shell .management-access-editorial{padding:32px 0 0;margin-top:auto}.management-shell .management-access-editorial h2{font-size:2.3rem;margin:0}.management-shell .management-access-editorial :is(.management-access-kicker,.management-access-signature,p),.management-shell .management-access-hero-footer{display:none}.management-shell .management-auth.management-access-form{padding:28px 24px 16px}.management-shell .management-access-content{max-width:480px;padding:32px 0}.management-shell .management-access-heading{margin-bottom:26px}.management-shell .management-access-form .management-access-heading h1{font-size:2.2rem}.management-shell .management-access-form .management-access-field input{font-size:1rem}.management-shell .management-access-assurance{margin-top:24px}}
+@media(max-width:400px){.management-shell .management-access{padding:10px}.management-shell .management-access-hero{min-height:210px;padding:22px}.management-shell .management-auth.management-access-form{padding:24px 20px 12px}.management-shell .management-access-form-top{gap:9px}.management-shell .management-access-form .management-access-heading h1{font-size:2rem}}
