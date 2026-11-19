@@ -3,7 +3,7 @@
 .collection-assignment-table{min-width:760px}
 .collection-assignment-table th:first-child,.collection-assignment-table td:first-child{min-width:0;width:48px}
 .collection-assignment-table td:nth-child(2) strong,.collection-assignment-table td:nth-child(2) small{display:block}
-.collection-assignment-table td:nth-child(2) small{color:#806d70;margin-top:5px}
+.collection-assignment-table td:nth-child(2) small{color:var(--erp-legacy-muted,#806d70);margin-top:5px}
 .management-shell .collection-assignment-table input[type=checkbox]{width:18px;min-height:18px;height:18px;padding:0;cursor:pointer;accent-color:#6c1727}
 
 /* Distribution cards are independent of positional table widths. */
