@@ -41,7 +41,7 @@
 .management-shell :is(.erp-page-header,.management-title-row) > * {min-width:0;max-width:100%}
 .management-shell .management-fields {gap:20px;grid-template-columns:repeat(2,minmax(0,1fr))}
 .management-shell :is(.management-fields,.workflow-profit-inputs,.stock-layout,.erp-insights,.erp-cards,.erp-review-highlights,.finance-partners) > * {min-width:0}
-.management-shell :is(input,select,textarea) {max-width:100%;min-width:0;font-size:.875rem;line-height:1.5;background:var(--erp-surface);color:var(--erp-ink);border-color:var(--erp-border);border-radius:8px}
+.management-shell :is(input:not([type=checkbox]):not([type=radio]),select,textarea) {max-width:100%;min-width:0;font-size:.875rem;line-height:1.5;background:var(--erp-surface);color:var(--erp-ink);border-color:var(--erp-border);border-radius:8px}
 .management-shell :is(input,select)::placeholder {color:var(--erp-muted);opacity:1}
 .management-shell :is(input[type=checkbox],input[type=radio]) {width:18px;height:18px;min-height:18px;flex:0 0 18px;padding:0}
 .management-shell label {font-size:.8rem;line-height:1.5;color:var(--erp-ink);gap:8px}
@@ -145,3 +145,11 @@
 .management-shell .jewelry-display-controls{padding-top:20px}
 .management-shell .jewelry-display-controls .erp-column-config{margin-top:20px}
 @media(max-width:480px){.management-shell .jewelry-display-controls .erp-column-config{margin-top:0}}
+
+/* Form boundaries remain distinguishable from their surfaces in both themes. */
+.management-shell{--erp-control-border:#95858b}
+.management-shell[data-management-theme="dark"]{--erp-control-border:#8d7c86}
+.management-shell :is(input:not([type=checkbox]):not([type=radio]),select,textarea){border-color:var(--erp-control-border)}
+
+/* Apply theme surfaces and text together; never fade a field through an unreadable intermediate color. */
+.management-shell :is(input:not([type=checkbox]):not([type=radio]),select,textarea){transition-property:border-color,box-shadow}

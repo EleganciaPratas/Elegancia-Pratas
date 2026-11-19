@@ -1,0 +1,43 @@
+{
+  "date": "2026-11-19",
+  "mode": "isolated real-component browser fixture; no production writes",
+  "browser": "Chromium",
+  "viewportWidths": [
+    375,
+    768,
+    1440
+  ],
+  "themes": [
+    "light",
+    "dark"
+  ],
+  "routes": [
+    "/admin",
+    "/admin/joias",
+    "/admin/colecoes",
+    "/admin/estoque",
+    "/admin/precificacao",
+    "/admin/catalogo",
+    "/admin/integracoes",
+    "/admin/financeiro",
+    "/admin/financeiro/cadastros",
+    "/admin/integracoes/frete",
+    "/admin/colecoes/campanhas"
+  ],
+  "cases": 66,
+  "overflowFailures": 0,
+  "browserErrors": 0,
+  "contrastChecks": 198,
+  "contrastMinimums": {
+    "text": 4.5,
+    "controlBorder": 3
+  },
+  "interactionChecks": 7,
+  "existingRegressionTests": 55,
+  "lintErrors": 0,
+  "existingLintWarnings": 4,
+  "productionBuild": "passed",
+  "lighthouseAuthenticated": "not measured; real login/MFA flow unavailable",
+  "dependenciesAddedToApplication": [],
+  "protectedDirectoriesChanged": []
+}
