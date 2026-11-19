@@ -19,10 +19,10 @@ import './ui/appearance.css';
 import { ManagementAppearance } from './ui/appearance';
 import ManagementAccessPanel, { AccessIcon } from './ui/access-panel';
 import './ui/access-panel.css';
-import WorkspaceTools from './workspace-tools';
 import dynamic from 'next/dynamic';
+const WorkspaceTools=dynamic(()=>import('./workspace-tools'),{ssr:false});
 const ManagementReadOnly=dynamic(()=>import('../security/management-read-only'),{ssr:false,loading:()=> <p role="status">Carregando consulta…</p>});
-import AccountMenu from '../security/account-menu';
+const AccountMenu=dynamic(()=>import('../security/account-menu'),{ssr:false});
 import {useIdleSession,IdleWarning,IDLE_MESSAGE} from '../security/use-idle-session';
 
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL;

@@ -21,9 +21,9 @@ export default function ManagementAccessPanel({ title, description, children, lo
       <aside className="management-access-hero" aria-label="Elegância Pratas">
         <Image src="/images/category-colares.png" alt="" fill priority sizes="(max-width: 760px) 100vw, 52vw" className="management-access-photo"/>
         <div className="management-access-shade" aria-hidden="true"/>
-        <Link className="management-access-brand" href="/" aria-label="Elegância Pratas — abrir loja">
+        <Link className="management-access-brand" href="/" aria-label="E ✦ Elegância PRATAS — abrir loja">
           <span className="management-access-monogram" aria-hidden="true">E<span>✦</span></span>
-          <span className="management-access-wordmark">Elegância<span>PRATAS</span></span>
+          <span className="management-access-wordmark">Elegância <span>PRATAS</span></span>
         </Link>
         <div className="management-access-editorial">
           <span className="management-access-kicker">A ESSÊNCIA DA ELEGÂNCIA</span>
