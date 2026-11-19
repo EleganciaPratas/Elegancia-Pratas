@@ -139,3 +139,9 @@
  .management-shell .erp-batch-actions .management-outline {flex:1}
  .management-shell .erp-dialog-header {flex-wrap:wrap}
 }
+
+/* Keep actions reachable while wide data tables scroll within their own card. */
+@media(min-width:1101px){.management-shell .jewelry-page .jewelry-table :is(th,td):last-child{position:sticky;right:0;z-index:2;background:var(--erp-surface);box-shadow:-1px 0 0 var(--erp-border)}.management-shell .jewelry-page .jewelry-table th:last-child{background:var(--erp-canvas)}}
+.management-shell .jewelry-display-controls{padding-top:20px}
+.management-shell .jewelry-display-controls .erp-column-config{margin-top:20px}
+@media(max-width:480px){.management-shell .jewelry-display-controls .erp-column-config{margin-top:0}}
