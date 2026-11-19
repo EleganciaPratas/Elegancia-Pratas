@@ -1,0 +1,77 @@
+{
+  "date": "2026-11-19",
+  "base": "270df94907c7a5bfc54832b514f6f14159b8f414",
+  "scope": "management access presentation",
+  "existingImage": "public/images/category-colares.png",
+  "applicationDependenciesAdded": [],
+  "authenticationHandlersIdentical": true,
+  "authenticatedManagementJsxIdentical": true,
+  "protectedDirectoriesChanged": [],
+  "unitTests": 55,
+  "browser": {
+    "cases": 48,
+    "widths": [
+      360,
+      390,
+      768,
+      1024,
+      1440,
+      1920
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "states": [
+      "login",
+      "recovery",
+      "mfa",
+      "enrollment"
+    ],
+    "javascriptErrors": 0,
+    "horizontalOverflow": 0,
+    "realEmailsSent": 0,
+    "productionWrites": 0,
+    "allSupabaseRequestsIntercepted": true
+  },
+  "lighthouse": {
+    "lighthouseVersion": "13.6.0",
+    "formFactor": "mobile",
+    "scores": {
+      "performance": 93,
+      "accessibility": 100,
+      "best-practices": 100
+    },
+    "lcpMs": 2019.1642500000003,
+    "tbtMs": 296,
+    "cls": 0,
+    "remaining": [
+      {
+        "id": "total-blocking-time",
+        "value": "300 ms"
+      },
+      {
+        "id": "max-potential-fid",
+        "value": "290 ms"
+      },
+      {
+        "id": "forced-reflow-insight"
+      },
+      {
+        "id": "lcp-discovery-insight"
+      },
+      {
+        "id": "network-dependency-tree-insight"
+      }
+    ],
+    "binaryFailures": [],
+    "route": "/admin/acesso",
+    "environment": "isolated production build in cloud; mobile laboratory run"
+  },
+  "lint": {
+    "errors": 0,
+    "preexistingWarnings": 4
+  },
+  "typescript": "passed",
+  "productionBuild": "passed"
+}
