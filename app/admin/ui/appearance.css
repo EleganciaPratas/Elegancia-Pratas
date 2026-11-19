@@ -1,0 +1,155 @@
+/* Shared geometry and appearance. Storefront and business rules remain independent. */
+.management-shell {
+  --erp-control-height:44px; --erp-card-padding:clamp(18px,2vw,28px);
+  --erp-on-brand:#fff; --erp-tint:#f3e9ed; --erp-radius:14px;
+  --erp-font:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color-scheme:light; background:var(--erp-canvas); color:var(--erp-ink);
+  font-family:var(--erp-font); line-height:1.55;
+}
+.management-shell[data-management-theme="dark"] {
+  color-scheme:dark; --erp-canvas:#171419; --erp-surface:#221e24; --erp-ink:#f3edf1;
+  --erp-muted:#bdb1b9; --erp-border:#483b46; --erp-brand:#efb8c8; --erp-focus:#f4c5d4;
+  --erp-tint:#38242e; --erp-on-brand:#301520; --erp-shadow:0 4px 20px #0003;
+  --admin-ink:var(--erp-ink); --admin-muted:var(--erp-muted);
+  --admin-wine:var(--erp-brand); --admin-line:var(--erp-border);
+  --erp-legacy-surface:var(--erp-surface); --erp-legacy-canvas:#2b242c;
+  --erp-legacy-ink:var(--erp-ink); --erp-legacy-muted:var(--erp-muted);
+  --erp-legacy-brand:var(--erp-brand); --erp-legacy-brand-fill:var(--erp-brand);
+  --erp-legacy-on-brand:var(--erp-on-brand); --erp-legacy-border:var(--erp-border);
+  --erp-legacy-danger:#ffb4bd; --erp-legacy-danger-bg:#421f2a;
+  --erp-legacy-success:#acdcb8; --erp-legacy-success-bg:#1e352a;
+  --erp-legacy-warning:#edce9c; --erp-legacy-warning-bg:#382d1f;
+}
+.management-shell *, .management-shell *::before, .management-shell *::after {box-sizing:border-box}
+.management-shell [hidden] {display:none!important}
+.management-shell .management-main {min-width:0;max-width:100%}
+.management-shell .management-page {max-width:1680px;padding:32px clamp(18px,3vw,44px) 64px}
+.management-shell .management-topbar {height:auto;min-height:76px;position:relative;z-index:35;gap:16px;padding:14px clamp(18px,3vw,44px);background:var(--erp-surface);border-color:var(--erp-border)}
+.management-shell .erp-breadcrumbs {padding:20px clamp(18px,3vw,44px) 0;flex-wrap:wrap;line-height:1.5}
+.management-shell :is(h1,h2,h3,p,dl,fieldset,form,label) {min-width:0}
+.management-shell :is(h1,h2,h3,p,dt,dd,legend,small,label,strong) {overflow-wrap:break-word}
+.management-shell :is(h1,h2,h3) {text-wrap:pretty;color:var(--erp-ink)}
+.management-shell .management-page h1 {font-family:var(--erp-font);font-size:clamp(1.75rem,2.6vw,2.5rem);font-weight:650;line-height:1.2;letter-spacing:-.035em;margin:6px 0 12px}
+.management-shell .management-page h2 {font-family:var(--erp-font);font-size:1.1rem;line-height:1.4;font-weight:650;letter-spacing:-.02em}
+.management-shell .management-intro {max-width:80ch;font-size:.9rem;line-height:1.7;margin:0 0 24px;color:var(--erp-muted)}
+.management-shell :is(.management-card,.management-step,.erp-card,.erp-insight,.management-metric,.sales-kpi) {min-width:0;background:var(--erp-surface);border-color:var(--erp-border);border-radius:var(--erp-radius);box-shadow:var(--erp-shadow)}
+.management-shell :is(.management-card,.management-step) {padding:var(--erp-card-padding)}
+.management-shell .management-card > :first-child {margin-top:0}
+.management-shell .management-card > :last-child {margin-bottom:0}
+.management-shell .management-card :is(p,small) {line-height:1.65}
+.management-shell :is(.erp-page-header,.management-title-row,.jewelry-form-head,.pricing-table-heading,.sales-section-heading) {gap:16px;flex-wrap:wrap}
+.management-shell :is(.erp-page-header,.management-title-row) > * {min-width:0;max-width:100%}
+.management-shell .management-fields {gap:20px;grid-template-columns:repeat(2,minmax(0,1fr))}
+.management-shell :is(.management-fields,.workflow-profit-inputs,.stock-layout,.erp-insights,.erp-cards,.erp-review-highlights,.finance-partners) > * {min-width:0}
+.management-shell :is(input:not([type=checkbox]):not([type=radio]),select,textarea) {max-width:100%;min-width:0;font-size:.875rem;line-height:1.5;background:var(--erp-surface);color:var(--erp-ink);border-color:var(--erp-border);border-radius:8px}
+.management-shell :is(input,select)::placeholder {color:var(--erp-muted);opacity:1}
+.management-shell :is(input[type=checkbox],input[type=radio]) {width:18px;height:18px;min-height:18px;flex:0 0 18px;padding:0}
+.management-shell label {font-size:.8rem;line-height:1.5;color:var(--erp-ink);gap:8px}
+.management-shell :is(button,.management-outline,.botao) {font-family:inherit;line-height:1.4;max-width:100%;white-space:normal;overflow-wrap:break-word}
+.management-shell .management-outline {display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:10px 16px;border-color:var(--erp-border);border-radius:8px;color:var(--erp-brand);background:var(--erp-surface);font-size:.8rem;letter-spacing:0}
+.management-shell .management-outline:hover {border-color:var(--erp-brand);background:var(--erp-tint);color:var(--erp-brand)}
+.management-shell .botao {border-radius:8px;background:var(--erp-brand);color:var(--erp-on-brand);padding:12px 20px;font-size:.82rem;text-transform:none;letter-spacing:0}
+.management-shell :is(a,button,input,select,textarea,summary):focus-visible {outline:2px solid var(--erp-focus);outline-offset:3px}
+.management-shell :is(.management-badge,.erp-badge) {max-width:100%;white-space:normal;overflow-wrap:break-word;line-height:1.5;border-radius:7px;background:var(--erp-tint);color:var(--erp-brand)}
+.management-shell :is(.erp-empty,.erp-checklist,.workflow-pricing-mode,.stock-components) {min-width:0;border-radius:10px}
+.management-shell .erp-cards {padding:0 var(--erp-card-padding)}
+.management-shell .erp-cards .erp-card {display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+.management-shell .erp-cards .erp-card > :is(h3,p) {margin:0}
+.management-shell .erp-cards .erp-card > button {margin-top:auto}
+.management-shell .jewelry-page .jewelry-thumbnail {width:72px;height:72px;border-radius:10px}
+.management-shell :is(.jewelry-table-card,.pricing-table-card) {padding:0}
+.management-shell .jewelry-list-controls {padding:var(--erp-card-padding);display:grid;gap:20px}
+.management-shell .jewelry-list-controls .jewelry-table-head {padding:0;align-items:start;gap:24px}
+.management-shell .jewelry-table-head > div {min-width:0;flex:1}
+.management-shell .jewelry-table-head h2 {display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 6px}
+.management-shell .jewelry-table-head h2 small {display:inline-grid;place-items:center;min-width:28px;min-height:26px;padding:3px 8px;border-radius:8px;background:var(--erp-tint);color:var(--erp-brand);font:500 .75rem var(--erp-font)}
+.management-shell .jewelry-table-head > label {flex:0 1 340px;min-width:220px}
+.management-shell .jewelry-filters {display:grid;grid-template-columns:minmax(150px,1fr) minmax(160px,1fr) auto auto;gap:16px;align-items:end;margin:0}
+.management-shell .jewelry-filters > * {min-width:0}
+.management-shell .jewelry-view-switch {display:inline-flex;gap:3px;padding:3px;min-height:44px;background:var(--erp-canvas);border:1px solid var(--erp-border);border-radius:10px}
+.management-shell .jewelry-view-switch .management-outline {min-height:36px;border:0;background:transparent;padding:8px 16px;color:var(--erp-muted)}
+.management-shell .jewelry-view-switch button[aria-pressed=true] {background:var(--erp-surface);color:var(--erp-brand);box-shadow:var(--erp-shadow)}
+.management-shell .jewelry-display-controls {display:flex;align-items:start;flex-wrap:wrap;gap:16px;padding:0 var(--erp-card-padding) 20px;margin:0}
+.management-shell .jewelry-display-controls > label {width:180px;min-width:0}
+.management-shell .erp-column-config {flex:1;min-width:min(260px,100%);padding:0;background:var(--erp-canvas)}
+.management-shell .erp-column-config summary {padding:12px 16px;cursor:pointer;min-height:44px;font-size:.8rem;font-weight:600}
+.management-shell .erp-column-config > p {margin:0;padding:0 16px 12px;font-size:.75rem}
+.management-shell .erp-column-config > div {margin:0 16px;padding:10px 0;border-top:1px solid var(--erp-border);flex-wrap:wrap}
+.management-shell .erp-column-config > div label {min-width:0;flex:1;margin:0}
+.management-shell .erp-column-config button {min-width:36px;min-height:36px}
+.management-shell .erp-batch-actions {margin:0;padding:14px var(--erp-card-padding);border-top:1px solid var(--erp-border);border-bottom:1px solid var(--erp-border);background:var(--erp-canvas);gap:12px;font-size:.78rem}
+.management-shell .erp-batch-actions p {font-size:.75rem;margin:0;line-height:1.5}
+.management-shell .erp-batch-actions > span {font-weight:600;color:var(--erp-ink)}
+.management-shell .jewelry-table th {font-size:.68rem;line-height:1.5;letter-spacing:.04em}
+.management-shell .jewelry-table td {font-size:.82rem;line-height:1.6}
+.management-shell .jewelry-table-scroll {border-top:1px solid var(--erp-border)}
+.management-shell .erp-pagination {padding:18px var(--erp-card-padding);margin:0;border-top:1px solid var(--erp-border)}
+.management-shell .jewelry-table-card :is(.erp-empty,.erp-load-error) {margin:var(--erp-card-padding)}
+.management-shell .jewelry-table-card .erp-cards {padding-top:20px;padding-bottom:20px;margin:0}
+.management-shell .jewelry-table-card .jewelry-card-selected {border-color:var(--erp-brand)}
+.management-shell .stock-records article > div {min-width:0}
+.management-shell .stock-record-actions {flex-wrap:wrap}
+.management-shell .finance-result > div {align-items:baseline}
+.management-shell .finance-result dt {flex:1;min-width:140px}
+.management-shell .finance-result dd {font-weight:600;font-variant-numeric:tabular-nums}
+.management-shell .workflow-result {padding:20px;gap:20px;border:1px solid var(--erp-border)}
+.management-shell .workflow-result > div {min-width:0}
+.management-shell .erp-report-charts {gap:20px}
+.management-shell .erp-dialog {border-radius:16px}
+.management-shell .erp-drawer {border-radius:16px 0 0 16px;padding:28px}
+.management-shell .erp-dialog-header {align-items:start}
+.management-shell .erp-dialog-header h2 {margin:0;line-height:1.4;min-width:0}
+.management-shell .erp-dialog-header button {flex:none}
+.management-shell .management-status:not(:empty) {border-radius:9px;overflow-wrap:anywhere;line-height:1.6}
+.management-shell .management-auth {background:var(--erp-surface);border-color:var(--erp-border);border-radius:16px;padding:32px}
+.management-shell .erp-user-menu.account-menu > .account-menu-panel {width:320px;max-height:calc(100dvh - 100px);overflow-y:auto;overscroll-behavior:contain}
+.management-shell .account-appearance {padding:16px 10px;margin:6px 0;border-top:1px solid var(--erp-border);border-bottom:1px solid var(--erp-border)}
+.management-shell .account-appearance-heading {display:grid;gap:3px;margin-bottom:12px}
+.management-shell .account-appearance-heading strong {font-size:.8rem}
+.management-shell .account-appearance-heading span {font-size:.7rem;color:var(--erp-muted)}
+.management-shell .account-theme-options {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.management-shell .account-theme-options button {display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;border:1px solid var(--erp-border);border-radius:8px;background:var(--erp-surface);color:var(--erp-muted);font-size:.8rem;cursor:pointer}
+.management-shell .account-theme-options button[aria-pressed=true] {border-color:var(--erp-brand);background:var(--erp-tint);color:var(--erp-brand);box-shadow:inset 0 0 0 1px var(--erp-brand)}
+.management-shell[data-management-theme="dark"] :is(.finance-tabs button[aria-pressed=true],.erp-stepper li[data-done=true] > span) {color:var(--erp-on-brand)}
+.management-shell[data-management-theme="dark"] .erp-user-menu.account-menu > .account-menu-panel {box-shadow:0 16px 48px #0006}
+.management-shell[data-management-theme="dark"] .jewelry-table button:hover {background:var(--erp-tint);color:var(--erp-brand)}
+@media(min-width:901px) {
+ .management-shell .management-sidebar {gap:20px}
+ .management-shell .management-sidebar nav a {border-radius:12px}
+}
+@media(max-width:1100px) {
+ .management-shell .jewelry-filters {grid-template-columns:repeat(2,minmax(0,1fr))}
+ .management-shell .jewelry-view-switch {justify-self:start}
+}
+@media(max-width:750px) {
+ .management-shell .management-page {padding:24px 16px 48px}
+ .management-shell .management-fields {grid-template-columns:minmax(0,1fr)}
+ .management-shell .erp-page-header .erp-actions {width:100%}
+ .management-shell .jewelry-table-head {display:grid}
+ .management-shell .jewelry-table-head > label {min-width:0;width:100%}
+ .management-shell .management-topbar {padding:12px 16px}
+ .management-shell .erp-user-menu.account-menu > .account-menu-panel {max-width:calc(100vw - 24px)}
+}
+@media(max-width:480px) {
+ .management-shell .jewelry-filters {grid-template-columns:minmax(0,1fr)}
+ .management-shell .jewelry-filters > .management-outline {justify-self:start}
+ .management-shell .jewelry-display-controls {display:grid;grid-template-columns:minmax(0,1fr)}
+ .management-shell .jewelry-display-controls > label {width:100%}
+ .management-shell .erp-drawer {border-radius:0;padding:20px 16px}
+ .management-shell .erp-batch-actions .management-outline {flex:1}
+ .management-shell .erp-dialog-header {flex-wrap:wrap}
+}
+
+/* Keep actions reachable while wide data tables scroll within their own card. */
+@media(min-width:1101px){.management-shell .jewelry-page .jewelry-table :is(th,td):last-child{position:sticky;right:0;z-index:2;background:var(--erp-surface);box-shadow:-1px 0 0 var(--erp-border)}.management-shell .jewelry-page .jewelry-table th:last-child{background:var(--erp-canvas)}}
+.management-shell .jewelry-display-controls{padding-top:20px}
+.management-shell .jewelry-display-controls .erp-column-config{margin-top:20px}
+@media(max-width:480px){.management-shell .jewelry-display-controls .erp-column-config{margin-top:0}}
+
+/* Form boundaries remain distinguishable from their surfaces in both themes. */
+.management-shell{--erp-control-border:#95858b}
+.management-shell[data-management-theme="dark"]{--erp-control-border:#8d7c86}
+.management-shell :is(input:not([type=checkbox]):not([type=radio]),select,textarea){border-color:var(--erp-control-border)}
+
+/* Apply theme surfaces and text together; never fade a field through an unreadable intermediate color. */
+.management-shell :is(input:not([type=checkbox]):not([type=radio]),select,textarea){transition-property:border-color,box-shadow}

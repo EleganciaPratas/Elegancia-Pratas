@@ -1,5 +1,5 @@
 /* Shared management interface. Scoped to the administrative panel. */
-.management-shell { --admin-ink:#30272b; --admin-muted:#6b6063; --admin-wine:#68152d; --admin-line:#e8e1df; background:#f6f4f3; color:var(--admin-ink); }
+.management-shell { --admin-ink:#30272b; --admin-muted:#6b6063; --admin-wine:#68152d; --admin-line:#e8e1df; background:var(--erp-legacy-canvas,#f6f4f3); color:var(--admin-ink); }
 .management-layout { grid-template-columns:76px minmax(0,1fr); }
 .management-sidebar { position:sticky; top:0; z-index:30; width:76px; height:100vh; padding:22px 12px; align-items:stretch; gap:24px; background:#431020; border-right:0; overflow-y:auto; }
 .management-brand { display:flex; width:100%; height:auto; min-height:55px; justify-content:flex-start; gap:11px; text-align:left; color:#fff; letter-spacing:0; }
@@ -16,30 +16,30 @@
 .management-brand .management-brand-name,.management-sidebar nav a span,.management-sidebar-bottom a span,.management-sidebar-bottom button span { display:none; }
 .management-brand,.management-sidebar nav a,.management-sidebar-bottom a,.management-sidebar-bottom button { justify-content:center; }
 .management-menu-toggle { display:none; }
-.management-topbar { min-height:72px; height:auto; background:#fff; }
+.management-topbar { min-height:72px; height:auto; background:var(--erp-legacy-surface,#fff); }
 .management-topbar>div { gap:5px; }
 .management-topbar strong { font-size:1rem; }
 .management-page { max-width:1500px; padding:38px clamp(20px,3vw,48px) 80px; }
-.management-page h1 { font:600 clamp(1.8rem,2.5vw,2.35rem) Arial,sans-serif; letter-spacing:-.035em; color:#2f272a; margin:8px 0 10px; }
-.management-page h2 { font:600 1.1rem Arial,sans-serif; letter-spacing:-.015em; color:#352c30; }
+.management-page h1 { font:600 clamp(1.8rem,2.5vw,2.35rem) Arial,sans-serif; letter-spacing:-.035em; color:var(--erp-legacy-ink,#2f272a); margin:8px 0 10px; }
+.management-page h2 { font:600 1.1rem Arial,sans-serif; letter-spacing:-.015em; color:var(--erp-legacy-ink,#352c30); }
 .management-intro { max-width:760px; line-height:1.55; }
-.management-card,.management-step,.sales-kpi,.management-metric { background:#fff; border:1px solid var(--admin-line); border-radius:10px; box-shadow:0 2px 9px #28151b08; }
+.management-card,.management-step,.sales-kpi,.management-metric { background:var(--erp-legacy-surface,#fff); border:1px solid var(--admin-line); border-radius:10px; box-shadow:0 2px 9px #28151b08; }
 .management-step { min-height:170px; }
-.management-shell :is(input:not([type=checkbox]):not([type=radio]),select,textarea) { min-height:44px; border-color:#cfc5c5; border-radius:7px; }
+.management-shell :is(input:not([type=checkbox]):not([type=radio]),select,textarea) { min-height:44px; border-color:var(--erp-legacy-border,#cfc5c5); border-radius:7px; }
 .management-shell :is(a,button,input,select,textarea):focus-visible { outline:3px solid #a65a70; outline-offset:3px; }
 .management-shell :is(button,.management-outline,.botao) { min-height:44px; }
 .management-shell button:disabled { cursor:not-allowed; }
 .management-shell :is(.jewelry-table-card,.catalog-table-wrap,.stock-table-wrap,.collections-table-wrap) { max-width:100%; }
 .management-shell :is(th,td) { font-variant-numeric:tabular-nums; }
-.management-shell .management-status:not(:empty) { border-left:3px solid #8b3850; border-radius:5px; padding:12px 15px; }
+.management-shell .management-status:not(:empty) { border-left:3px solid var(--erp-legacy-danger,#8b3850); border-radius:5px; padding:12px 15px; }
 .management-auth { border-radius:12px; box-shadow:0 12px 40px #3a172210; }
-.management-auth .auth-text-button{justify-self:start;width:auto;min-height:44px;padding:6px 0;border:0;background:transparent;color:#68152d;text-decoration:underline;cursor:pointer;font:inherit}.management-auth .auth-recovery-link{margin-top:14px}
+.management-auth .auth-text-button{justify-self:start;width:auto;min-height:44px;padding:6px 0;border:0;background:transparent;color:var(--erp-legacy-brand,#68152d);text-decoration:underline;cursor:pointer;font:inherit}.management-auth .auth-recovery-link{margin-top:14px}
 @media(max-width:900px) {
   .management-layout { grid-template-columns:1fr; }
   .management-sidebar { position:sticky; width:100%; height:auto; min-height:68px; padding:10px 16px; display:flex; flex-direction:row; flex-wrap:wrap; align-items:center; gap:0; overflow:visible; }
   .management-brand { width:auto; flex:1; min-height:46px; }
   .management-brand .management-brand-symbol { width:37px; height:37px; }
-  .management-menu-toggle { display:block; width:auto!important; min-height:44px; padding:8px 13px!important; margin:0!important; border:1px solid #ffffff70!important; border-radius:7px; background:transparent!important; color:#fff!important; }
+  .management-menu-toggle { display:block; width:auto!important; min-height:44px; padding:8px 13px!important; margin:0!important; border:1px solid #ffffff70!important; border-radius:7px; background:transparent!important; color:var(--erp-legacy-on-brand,#fff)!important; }
   .management-sidebar nav,.management-sidebar-bottom { display:none; }
   .management-sidebar.is-open nav { display:flex; flex-wrap:wrap; order:3; width:100%; max-height:min(55vh,420px); overflow:auto; padding-top:14px; }
   .management-sidebar.is-open .management-sidebar-bottom { display:flex; order:4; width:100%; margin-top:8px; }

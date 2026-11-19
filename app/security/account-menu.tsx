@@ -4,6 +4,7 @@ import type {SupabaseClient} from '@supabase/supabase-js';
 import AccountSwitch from './account-switch';
 import AccountMenuIcon from './account-menu-icon';
 import './account-menu.css';
+import { ManagementThemeControl } from '../admin/ui/appearance';
 
 export default function AccountMenu({db,name,readOnly,onSwitch}:{db:SupabaseClient;name:string;readOnly:boolean;onSwitch:(email:string)=>Promise<void>}){
  const initial=name.trim().slice(0,1).toLocaleUpperCase('pt-BR');
@@ -18,6 +19,7 @@ export default function AccountMenu({db,name,readOnly,onSwitch}:{db:SupabaseClie
  <div className="account-menu-profile-copy"><span className="account-menu-eyebrow">Conta atual</span><strong>{name}</strong>
  <span className="account-menu-role">{readOnly?'Somente consulta':'Administrador'}</span></div>
  </div>
+ <ManagementThemeControl/>
  <nav className="account-menu-actions" aria-label="Opções da conta">
  <AccountSwitch db={db} onSwitch={onSwitch}/>
  {!readOnly&&<Link className="account-menu-item" href="/admin#account-security">
