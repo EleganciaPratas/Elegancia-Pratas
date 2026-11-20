@@ -1,4 +1,4 @@
-export const jewelryColumns=['modelo','colecao','genero','quantidade','custo','total','preco','situacao'] as const;
+export const jewelryColumns=['modelo','colecao','genero','medidas','quantidade','custo','total','preco','situacao'] as const;
 export type JewelryColumn=typeof jewelryColumns[number];
 export type JewelryPreferences={query:string;status:string;sort:string;view:string;density:string;page:number;columns:JewelryColumn[];hidden:JewelryColumn[]};
 export const defaultJewelryPreferences:JewelryPreferences={query:'',status:'todas',sort:'recentes',view:'tabela',density:'confortavel',page:1,columns:[...jewelryColumns],hidden:[]};

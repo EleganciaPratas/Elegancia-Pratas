@@ -23,5 +23,5 @@ test('preferências sobrevivem ao recarregamento e ignoram parâmetros inválido
  assert.equal(p.query,'anel');assert.equal(p.columns[0],'preco');assert.equal(p.density,'compacta');
  assert.deepEqual(readJewelryPreferences(writeJewelryPreferences(p)),p);
  const invalid=readJewelryPreferences('?situacao=fraude&pagina=-3&colunas=unknown,preco,preco&ocultas=unknown');
- assert.equal(invalid.status,'todas');assert.equal(invalid.page,1);assert.equal(new Set(invalid.columns).size,8);assert.equal(invalid.hidden.length,0);
+ assert.equal(invalid.status,'todas');assert.equal(invalid.page,1);assert.equal(new Set(invalid.columns).size,9);assert.ok(invalid.columns.includes('medidas'));assert.equal(invalid.hidden.length,0);
 });
